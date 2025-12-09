@@ -19,6 +19,12 @@ class AURA_API AAuraCharacter : public AAuraCharacterBase
 public:
     AAuraCharacter();
     
+    // 用于初始化服务器端的能力系统组件
+    virtual void PossessedBy(AController* NewController) override;
+    
+    //用于初始化客户端的能力系统组件 
+    virtual void OnRep_PlayerState() override;
+    
 protected:
     
     //弹簧臂组件
@@ -28,4 +34,7 @@ protected:
     //相机组件
     UPROPERTY(EditAnywhere, Category = "Camera")
     TObjectPtr<UCameraComponent> Camera;
+    
+private:
+    void InitAbilityActorInfo();  
 };
