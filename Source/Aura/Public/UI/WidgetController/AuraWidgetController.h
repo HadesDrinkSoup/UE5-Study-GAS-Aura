@@ -1,0 +1,29 @@
+// This is the GAS project that I'm studying.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
+#include "UObject/Object.h"
+#include "AuraWidgetController.generated.h"
+
+/**
+ * 
+ */
+UCLASS()
+class AURA_API UAuraWidgetController : public UObject
+{
+	GENERATED_BODY()
+protected:
+    UPROPERTY(BlueprintReadOnly, Category="WidgetController")
+    TObjectPtr<APlayerController> PlayerController;
+    
+    UPROPERTY(BlueprintReadOnly, Category="WidgetController")
+    TObjectPtr<APlayerStart> PlayerStart;
+    
+    UPROPERTY(BlueprintReadOnly, Category="WidgetController")
+    TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+    
+    UPROPERTY(BlueprintReadOnly, Category="WidgetController")
+    TObjectPtr<UAttributeSet> AttributeSet;
+};
