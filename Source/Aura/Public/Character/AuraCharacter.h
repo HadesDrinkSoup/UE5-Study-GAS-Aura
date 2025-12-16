@@ -36,5 +36,6 @@ protected:
     TObjectPtr<UCameraComponent> Camera;
     
 private:
+    //初始化角色能力信息
     void InitAbilityActorInfo();  
 };

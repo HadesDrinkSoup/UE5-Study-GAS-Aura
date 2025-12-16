@@ -95,12 +95,13 @@ void AAuraPlayerController::BeginPlay()
     UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
     
     // 安全检查：确保子系统有效
-    check(SubSystem);
+    if (SubSystem)
+    {
+        // 将Aura输入映射上下文添加到子系统
+        // 参数0表示映射优先级（数字越小优先级越高）
+        SubSystem->AddMappingContext(AuraContext, 0);
+    }
     
-    // 将Aura输入映射上下文添加到子系统
-    // 参数0表示映射优先级（数字越小优先级越高）
-    SubSystem->AddMappingContext(AuraContext, 0);
-
     // 显示鼠标光标
     bShowMouseCursor = true;
     

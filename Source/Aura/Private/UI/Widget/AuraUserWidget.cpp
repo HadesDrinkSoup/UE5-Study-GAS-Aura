@@ -5,10 +5,8 @@
 
 void UAuraUserWidget::SetWidgetController(UObject* InWidgetController)
 {
+    //将传入的控制器引用保存到成员变量
     WidgetController = InWidgetController;
+    // 触发蓝图可实现事件
     WidgetControllerSet();
-}
-
-void UAuraUserWidget::WidgetControllerSet()
-{
 }
