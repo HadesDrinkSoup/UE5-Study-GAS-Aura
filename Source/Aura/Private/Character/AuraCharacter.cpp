@@ -4,6 +4,7 @@
 #include "Character/AuraCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
@@ -127,7 +128,8 @@ void AAuraCharacter::InitAbilityActorInfo()
     // 2. AvatarActor: 角色自身（能力的执行者）
     // 这是GAS的标准模式：分离拥有者和执行者
     AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
-    
+    // 调用自定义AbilitySystemComponent的额外初始化
+    Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
     // 将本地的AbilitySystemComponent引用指向PlayerState中的组件
     // 这样角色就可以直接访问能力系统，而无需每次都通过PlayerState
     AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();

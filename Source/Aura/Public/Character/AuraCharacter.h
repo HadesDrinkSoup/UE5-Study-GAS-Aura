@@ -37,5 +37,5 @@ protected:
     
 private:
     //初始化角色能力信息
-    void InitAbilityActorInfo();  
+    virtual void InitAbilityActorInfo() override;
 };

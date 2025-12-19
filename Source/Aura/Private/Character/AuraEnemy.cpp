@@ -62,5 +62,6 @@ void AAuraEnemy::BeginPlay()
     // 将敌人自身设置为AbilitySystemComponent的OwnerActor和AvatarActor
     // 这是GAS系统工作的关键步骤，建立Actor与能力系统的关联
     AbilitySystemComponent->InitAbilityActorInfo(this, this);
+    Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }
 
