@@ -137,6 +137,8 @@ void AAuraCharacter::InitAbilityActorInfo()
     // 将本地的AttributeSet引用指向PlayerState中的属性集
     AttributeSet = AuraPlayerState->GetAttributeSet();
     
+    InitializeDefaultAttributes();
+    
     if(AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
     {
         if(AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))

@@ -58,9 +58,8 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 	GENERATED_BODY()
 	
 public:
-    // 构造函数
     UAuraAttributeSet();
-    
+
     // 重写函数：处理属性复制（网络同步）
     virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
     
@@ -70,24 +69,72 @@ public:
     // 重写函数：游戏效果执行后的处理（应用实际效果）
     virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
     
-    // --- 属性定义 ---
+    // --- 基础属性定义 ---
     
     // 当前生命值属性
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Health, Category="Health")
     FGameplayAttributeData Health;
     ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Health);  // 为Health生成访问函数
     
-    // 最大生命值属性
-    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxHealth, Category="Health")
-    FGameplayAttributeData MaxHealth;
-    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxHealth);  // 为MaxHealth生成访问函数
-    
     // 当前法力值属性
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Mana, Category="Mana")
     FGameplayAttributeData Mana;
     ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana);  // 为Mana生成访问函数
     
-    // 最大法力值属性
+    // --- 主要属性定义 ---
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Strength, Category="Strength")
+    FGameplayAttributeData Strength;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength);  // 为Strength生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Intelligence, Category="Intelligence")
+    FGameplayAttributeData Intelligence;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Intelligence);  // 为Intelligence生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Resilience, Category="Resilience")
+    FGameplayAttributeData Resilience;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resilience);  // 为Resilience生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Vigor, Category="Vigor")
+    FGameplayAttributeData Vigor;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor);  // 为Vigor生成访问函数
+    
+    // --- 次要属性定义 ---
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Armor, Category="Armor")
+    FGameplayAttributeData Armor;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Armor);  // 为Armor生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_ArmorPenetration, Category="ArmorPenetration")
+    FGameplayAttributeData ArmorPenetration;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ArmorPenetration);  // 为ArmorPenetration生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_BlockChance, Category="BlockChance")
+    FGameplayAttributeData BlockChance;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, BlockChance);  // 为BlockChance生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_CriticalHitChance, Category="CriticalHitChance")
+    FGameplayAttributeData CriticalHitChance;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, CriticalHitChance);  // 为CriticalHitChance生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_CriticalHitDamage, Category="CriticalHitDamage")
+    FGameplayAttributeData CriticalHitDamage;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, CriticalHitDamage);  // 为CriticalHitDamage生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_CriticalHitResistance, Category="CriticalHitResistance")
+    FGameplayAttributeData CriticalHitResistance;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, CriticalHitResistance);  // 为CriticalHitResistance生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_HealthRegeneration, Category="HealthRegeneration")
+    FGameplayAttributeData HealthRegeneration;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, HealthRegeneration);  // 为HealthRegeneration生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_ManaRegeneration, Category="ManaRegeneration")
+    FGameplayAttributeData ManaRegeneration;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ManaRegeneration);  // 为ManaRegeneration生成访问函数
+    
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxHealth, Category="Health")
+    FGameplayAttributeData MaxHealth;
+    ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxHealth);  // 为MaxHealth生成访问函数
+    
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxMana, Category="Mana")
     FGameplayAttributeData MaxMana;
     ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxMana);  // 为MaxMana生成访问函数
@@ -97,16 +144,37 @@ public:
     // 生命值复制回调
     UFUNCTION()
     void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
-    
-    // 最大生命值复制回调
-    UFUNCTION()
-    void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
-    
     // 法力值复制回调
     UFUNCTION()
     void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
     
-    // 最大法力值复制回调
+    UFUNCTION()
+    void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
+    UFUNCTION()
+    void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
+    UFUNCTION()
+    void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
+    UFUNCTION()
+    void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
+    UFUNCTION()
+    void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
+    
+    UFUNCTION()
+    void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const;
+    UFUNCTION()
+    void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const;
+    UFUNCTION()
+    void OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const;
+    UFUNCTION()
+    void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const;
+    UFUNCTION()
+    void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const;
+    UFUNCTION()
+    void OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const;
+    UFUNCTION()
+    void OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const;
+    UFUNCTION()
+    void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
     UFUNCTION()
     void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
     

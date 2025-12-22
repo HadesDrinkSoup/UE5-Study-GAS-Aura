@@ -8,6 +8,7 @@
 #include "AuraCharacterBase.generated.h"
 
 class UAttributeSet;
+class UGameplayEffect;
 
 // Abstract标记：表示这是一个抽象类，不能被直接实例化
 UCLASS(Abstract)
@@ -43,4 +44,11 @@ protected:
     UPROPERTY()
     TObjectPtr<UAttributeSet> AttributeSet;
     
+    UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="AttributeSet")
+    TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
+    UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="AttributeSet")
+    TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
+    
+    void ApplyEffectToSelf(const TSubclassOf<UGameplayEffect>& GameplayEffectClass, const float& Level) const;
+    void InitializeDefaultAttributes() const;
 };

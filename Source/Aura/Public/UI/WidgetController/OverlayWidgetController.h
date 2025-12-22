@@ -25,10 +25,7 @@ struct FUIWidgetRow : public FTableRowBase
     UTexture2D* Image = nullptr;
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedDelegate, float, NewHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedDelegate, float, NewMaxHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedDelegate, float, NewMana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedDelegate, float, NewMaxMana);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedDelegate, float, NewValue);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowDataDelegate, FUIWidgetRow, Row);
 /**
@@ -43,25 +40,20 @@ public:
     virtual void BindCallBacksToDependencies() override;
     
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnHealthChangedDelegate OnHealthChanged;
+    FOnAttributeChangedDelegate OnHealthChanged;
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnMaxHealthChangedDelegate OnMaxHealthChanged;
+    FOnAttributeChangedDelegate OnMaxHealthChanged;
     
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnManaChangedDelegate OnManaChanged;
+    FOnAttributeChangedDelegate OnManaChanged;
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnMaxManaChangedDelegate OnMaxManaChanged;
+    FOnAttributeChangedDelegate OnMaxManaChanged;
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
     FMessageWidgetRowDataDelegate MessageWidgetRowData;
     
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly , Category="WidgetData")
     TObjectPtr<UDataTable> MessageWidgetDataTable;
-    
-    void HealthChanged(const FOnAttributeChangeData& Data) const;
-    void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
-    void ManaChanged(const FOnAttributeChangeData& Data) const;
-    void MaxManaChanged(const FOnAttributeChangeData& Data) const;
     
     template<typename T>
     T* GetDataTableRowByTag(UDataTable* DataTable,const FGameplayTag& Tag);

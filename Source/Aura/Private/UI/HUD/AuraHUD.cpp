@@ -33,28 +33,21 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
     checkf(OverlayWidgetControllerClass, TEXT("OverlayWidgetControllerClass未设置，请在BP_AuraHUD设置OverlayWidgetControllerClass"));
     
     // 创建Widget实例
-    // GetWorld(): 获取当前游戏世界上下文
-    // OverlayWidgetClass: 在编辑器中配置的Widget蓝图类
     UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
     
-    // 将创建的Widget转换为具体的AuraUserWidget类型
-    // 这允许我们访问AuraUserWidget特有的功能和方法
     OverlayWidget = Cast<UAuraUserWidget>(Widget);
     
     // 创建Widget控制器参数结构体
-    // 这个结构体封装了所有需要传递给Widget控制器的数据
     const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
     
     // 获取或创建Widget控制器实例
     UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
     
     // 将Widget控制器设置为Widget的控制器
-    // 这使得Widget可以访问控制器中的数据和方法
     OverlayWidget->SetWidgetController(WidgetController);
     WidgetController->BroadcastInitialValues();
     
-    // 将Widget添加到视口，使其在屏幕上可见
-    // AddToViewport()是UE4/UE5中显示UI的标准方法
+    // 添加到视口，使其在屏幕上可见
     Widget->AddToViewport();
 }
 
