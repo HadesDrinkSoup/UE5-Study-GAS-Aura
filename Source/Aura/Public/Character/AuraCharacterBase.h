@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
+#include "Interaction/CombatInterface.h"
 #include "AuraCharacterBase.generated.h"
 
 class UAttributeSet;
@@ -12,7 +13,7 @@ class UGameplayEffect;
 
 // Abstract标记：表示这是一个抽象类，不能被直接实例化
 UCLASS(Abstract)
-class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface
+class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -44,6 +45,8 @@ protected:
     UPROPERTY()
     TObjectPtr<UAttributeSet> AttributeSet;
     
+    UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="AttributeSet")
+    TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
     UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="AttributeSet")
     TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
     UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="AttributeSet")

@@ -58,7 +58,6 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 	GENERATED_BODY()
 	
 public:
-    UAuraAttributeSet();
 
     // 重写函数：处理属性复制（网络同步）
     virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
@@ -69,7 +68,7 @@ public:
     // 重写函数：游戏效果执行后的处理（应用实际效果）
     virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
     
-    // --- 基础属性定义 ---
+    /** 重要属性 **/
     
     // 当前生命值属性
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Health, Category="Health")
@@ -81,7 +80,7 @@ public:
     FGameplayAttributeData Mana;
     ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana);  // 为Mana生成访问函数
     
-    // --- 主要属性定义 ---
+    /** 主要属性 **/
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Strength, Category="Strength")
     FGameplayAttributeData Strength;
     ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength);  // 为Strength生成访问函数
@@ -98,7 +97,7 @@ public:
     FGameplayAttributeData Vigor;
     ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor);  // 为Vigor生成访问函数
     
-    // --- 次要属性定义 ---
+    /** 次要属性 **/
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Armor, Category="Armor")
     FGameplayAttributeData Armor;
     ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Armor);  // 为Armor生成访问函数
@@ -156,9 +155,9 @@ public:
     void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
     UFUNCTION()
     void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
+    
     UFUNCTION()
     void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
-    
     UFUNCTION()
     void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const;
     UFUNCTION()

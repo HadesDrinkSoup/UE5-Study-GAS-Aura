@@ -9,32 +9,26 @@
 #include "GameFramework/Character.h"
 #include "Net/UnrealNetwork.h"
 
-UAuraAttributeSet::UAuraAttributeSet()
-{
-    //基础属性
-    InitHealth(50.0f);
-    InitMaxHealth(100.0f);
-    InitMana(10.0f);
-    InitMaxMana(50.0f);
-}
 // 重写函数：定义需要网络复制的属性
 void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
     // 调用父类实现，确保基础功能正常
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     
+    /** 重要属性 **/
     // 注册生命值属性进行网络复制
     // COND_None: 无条件复制（总是复制）
     // REPNOTIFY_Always: 总是发送通知，即使值没有改变
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Health, COND_None, REPNOTIFY_Always);
-    // 注册法力值属性进行网络复制
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Mana, COND_None, REPNOTIFY_Always);
     
+    /** 主要属性 **/
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Strength, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
     
+    /** 次要属性 **/
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Armor, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, ArmorPenetration, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, BlockChance, COND_None, REPNOTIFY_Always);

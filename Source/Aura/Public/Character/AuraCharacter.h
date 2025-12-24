@@ -25,6 +25,10 @@ public:
     //用于初始化客户端的能力系统组件 
     virtual void OnRep_PlayerState() override;
     
+    /** Combat InterFace*/
+    virtual int32 GetLevel() override;
+    /** end Combat InterFace*/
+    
 protected:
     
     //弹簧臂组件

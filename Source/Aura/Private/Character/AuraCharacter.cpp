@@ -111,6 +111,13 @@ void AAuraCharacter::OnRep_PlayerState()
     InitAbilityActorInfo();
 }
 
+int32 AAuraCharacter::GetLevel()
+{
+    const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+    check(AuraPlayerState);
+    return AuraPlayerState->GetPlayerLevel();
+}
+
 /**
  * 初始化能力Actor信息
  * 关键步骤：将PlayerState中的AbilitySystemComponent与角色关联
