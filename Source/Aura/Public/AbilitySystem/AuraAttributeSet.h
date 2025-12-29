@@ -6,6 +6,7 @@
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
 #include "AuraAttributeSet.generated.h"
+DECLARE_DELEGATE_RetVal(FGameplayAttribute, FAttributeDelegate);
 
 // 宏定义：为属性生成便捷的Getter/Setter/Initter函数
 // ClassName: 类名，PropertyName: 属性名
@@ -47,6 +48,10 @@ struct FEffectProperties
     ACharacter* TargetCharacter = nullptr;         // 目标角色
 };
 
+
+template<class T>
+using TStaticFuncPtr = TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
+
 /**
  * AuraAttributeSet类
  * 继承自UAttributeSet，负责管理角色的属性（生命值、法力值等）
@@ -58,7 +63,8 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 	GENERATED_BODY()
 	
 public:
-
+    UAuraAttributeSet();
+    
     // 重写函数：处理属性复制（网络同步）
     virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
     
@@ -67,6 +73,40 @@ public:
     
     // 重写函数：游戏效果执行后的处理（应用实际效果）
     virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+    /**
+     *  使用Map数组创建映射，在蓝图中实现能力属性在属性控件蓝图中显示
+     *  方案一 创建标签和委托的映射
+     *      1. 创建委托DECLARE_DELEGATE_RetVal(FGameplayAttribute, FAttributeInitializeDelegate)
+     *      2. 创建映射TMap<FGameplay, FAttributeInitializeDelegate> TagsToAttributes
+     *      3. 添加到Map映射中
+     *          const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();  // 获取的是游戏中自定义的整个Tag，包含所有属性
+     *          FAttributeInitializeDelegate StrengthDelegate;	// 临时声明1个对应力量属性的专用委托
+     *          StrengthDelegate.BindStatic(GetStrengthAttribute);	// 绑定静态函数
+     *          TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength,StrengthDelegate);
+     *  方案二 利用创建委托绑定静态函数本质创建映射
+     *      1. 委托绑定函数的本质是静态委托实例的函数指针类型TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr FunctionPointer;
+     *          //函数指针语法
+     *          //FunctionPointer = GetStrengthAttribute; //函数指针指向GetStrengthAttribute函数
+     *          //FGameplayAttribute Attribute = FunctionPointer(); //接收函数返回的参数
+     *
+     *      2. 利用上述特性创建映射TMap<FGameplayTag, TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr> TagsToAttributes;
+     *          BaseStaticDelegateInstance - 委托系统的基类模板 
+     *          FGameplayAttribute() - 委托的函数签名
+     *          FDefaultDelegateUserPolicy - 委托的策略类
+     *          ::FFuncPtr指向匹配委托签名的函数指针
+     *      3. 可使用函数指针进一步简化TMap<FGameplayTag, FGameplayAttribute(*)()> TagsToAttributes;
+     *      3. 映添加到Map映射中
+     *          const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+     *          TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
+     *  方案三 利用委托绑定是函数指针类型， 使用模板简化函数指针进一步改进创建映射
+     *      1. 创建模板
+     *          template<class T>
+     *          using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
+     *      2. 创建映射
+     *          TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
+     */
+    
+    TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;  
     
     /** 重要属性 **/
     

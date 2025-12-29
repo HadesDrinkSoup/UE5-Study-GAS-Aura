@@ -5,6 +5,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "GameplayEffectTypes.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 
 
 AAuraCharacterBase::AAuraCharacterBase()
@@ -57,5 +58,13 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
     ApplyEffectToSelf(DefaultPrimaryAttributes, 1.0f);
     ApplyEffectToSelf(DefaultSecondaryAttributes, 1.0f);
     ApplyEffectToSelf(DefaultVitalAttributes, 1.0f);
+}
+
+void AAuraCharacterBase::AddCharacterAbilities() const
+{
+    if (!HasAuthority()) return;
+    UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(GetAbilitySystemComponent());
+    if (!AuraASC) return;
+    AuraASC->AddCharacterAbilities(StartupAbilities);
 }
 

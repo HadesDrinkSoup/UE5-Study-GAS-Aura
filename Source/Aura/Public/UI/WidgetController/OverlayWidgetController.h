@@ -40,16 +40,16 @@ public:
     virtual void BindCallBacksToDependencies() override;
     
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnHealthChanged;
+    FOnAttributeChangedDelegate OnHealthChangedDelegate;
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnMaxHealthChanged;
+    FOnAttributeChangedDelegate OnMaxHealthChangedDelegate;
     
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnManaChanged;
+    FOnAttributeChangedDelegate OnManaChangedDelegate;
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnMaxManaChanged;
+    FOnAttributeChangedDelegate OnMaxManaChangedDelegate;
     UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FMessageWidgetRowDataDelegate MessageWidgetRowData;
+    FMessageWidgetRowDataDelegate MessageWidgetRowDataDelegate;
     
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly , Category="WidgetData")

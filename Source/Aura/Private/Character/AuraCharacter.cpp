@@ -97,6 +97,7 @@ void AAuraCharacter::PossessedBy(AController* NewController)
     
     // 初始化GAS系统：建立AbilitySystemComponent与角色的关联
     InitAbilityActorInfo();
+    AddCharacterAbilities();
 }
 
 /**
@@ -145,7 +146,6 @@ void AAuraCharacter::InitAbilityActorInfo()
     AttributeSet = AuraPlayerState->GetAttributeSet();
     
     InitializeDefaultAttributes();
-    
     if(AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
     {
         if(AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))

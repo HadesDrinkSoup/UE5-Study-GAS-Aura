@@ -9,6 +9,7 @@
 #include "AbilitySystemComponent.h"
 #include "GameFramework/HUD.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "AuraHUD.generated.h"
 
 // 前向声明相关类，减少编译依赖
@@ -34,8 +35,9 @@ public:
     //获取叠加层Widget控制器
     UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
     
+    UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams);
+    
     // 初始化叠加层UI
-
     void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
     
 private:
@@ -51,4 +53,11 @@ private:
     // 叠加层Widget控制器类引用（在编辑器中可配置）
     UPROPERTY(EditAnywhere)
     TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
+    
+    UPROPERTY(EditAnywhere)
+    TSubclassOf<UAuraUserWidget> AttributeMenuWidgetClass;
+    UPROPERTY()
+    TObjectPtr<UAttributeMenuWidgetController> AttributeMenuWidgetController;
+    UPROPERTY(EditAnywhere)
+    TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 };

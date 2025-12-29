@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/Data/AttributeInfo.h"
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "AttributeMenuWidgetController.generated.h"
 
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedDelegate, float, NewValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributesChangedDelegate, const FAuraAttributeInfo&, Info);
 /**
  * 
  */
@@ -17,37 +19,15 @@ class AURA_API UAttributeMenuWidgetController : public UAuraWidgetController
 public:
     virtual void BroadcastInitialValues() override;
     virtual void BindCallBacksToDependencies() override;
-    /*
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnStrengthChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnResilienceChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnIntelligenceChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnVigorChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnArmorChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnArmorPenetrationChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnBlockChanceChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnCriticalHitChanceChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnCriticalHitDamageChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnCriticalHitResistanceChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnHealthRegenerationChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnManaRegenerationChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnMaxHealthChanged;
-    UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
-    FOnAttributeChangedDelegate OnMaxManaChanged;
-    */
+    
+    UPROPERTY(BlueprintAssignable, Category = "GAS | Attributes")
+    FOnAttributesChangedDelegate OnAttributeChangedDelegate;
+    
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly , Category="AttributeInfo")
-    TObjectPtr<UDataAsset> AttributeInfoAsset;
+    TObjectPtr<UAttributeInfo> AttributeInfo;
+    
+private:
+    UFUNCTION()
+    void BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute, const UAuraAttributeSet* AS) const;
 };
