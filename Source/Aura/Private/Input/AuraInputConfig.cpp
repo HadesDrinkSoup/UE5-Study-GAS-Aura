@@ -5,11 +5,11 @@
 
 const UInputAction* UAuraInputConfig::FindInputActionForTag(const FGameplayTag& InputTag, bool bLogNotFound)
 {
-    for (auto [InputAction, InputTag] : AuraInputActions)
+    for (const FAuraInputAction& Action : AbilityInputActions)
     {
-        if (InputTag.MatchesTagExact(InputTag))
+        if (Action.InputAction && Action.InputTag.MatchesTagExact(InputTag))
         {
-            return InputAction;
+            return Action.InputAction;
         }
     }
     if (bLogNotFound)

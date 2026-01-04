@@ -29,5 +29,5 @@ public:
     const UInputAction* FindInputActionForTag(const FGameplayTag& InputTag, bool bLogNotFound = false);
     
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-    TArray<FAuraInputAction> AuraInputActions;
+    TArray<FAuraInputAction> AbilityInputActions;
 };

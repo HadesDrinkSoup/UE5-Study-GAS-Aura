@@ -35,9 +35,14 @@ protected:
     
     virtual void InitAbilityActorInfo();
     
+    virtual FVector GetCombatSocketLocation() override;
+    
     //武器骨架网格体组件 
     UPROPERTY(EditAnywhere, Category = "Combat")
     TObjectPtr<USkeletalMeshComponent> Weapon;
+    
+    UPROPERTY(EditAnywhere, Category = "Combat")
+    FName WeaponTipSocketName;
     
     //能力系统组件
     UPROPERTY()

@@ -17,5 +17,5 @@ public:
     static UAuraAssetManager& Get();
 protected:
     virtual void StartInitialLoading() override;
-
+    
 };
