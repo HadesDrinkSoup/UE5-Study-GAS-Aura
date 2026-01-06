@@ -3,13 +3,16 @@
 
 #include "Actor/AuraProjectile.h"
 
+#include "NiagaraFunctionLibrary.h"
 #include "Components/ArrowComponent.h"
+#include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AAuraProjectile::AAuraProjectile()
 {
-	PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = false;
     bReplicates = true;
     
     Sphere = CreateDefaultSubobject<USphereComponent>("Sphere");
@@ -27,11 +30,24 @@ AAuraProjectile::AAuraProjectile()
     
     Arrow = CreateDefaultSubobject<UArrowComponent>("Arrow");
     Arrow->SetupAttachment(Sphere);
+    
+    LoopingSoundComponent = CreateDefaultSubobject<UAudioComponent>("AudioComponent");
 }
 
 void AAuraProjectile::BeginPlay()
 {
-	Super::BeginPlay();
-	
+    Super::BeginPlay();
+    SetLifeSpan(LifeSpan);
+    LoopingSoundComponent = UGameplayStatics::SpawnSoundAttached(LoopingSound, GetRootComponent());
 }
 
+void AAuraProjectile::Destroyed()
+{
+    if (!bHit && !HasAuthority())
+    {
+        UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
+        UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
+        LoopingSoundComponent->Stop();
+    }
+    Super::Destroyed();
+}
